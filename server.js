@@ -14,6 +14,8 @@ app.use(cors());
 
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 
 // Read environment variables (Render injects these automatically)
 const PORT = process.env.PORT || 3000;
