@@ -1,8 +1,18 @@
 import express from "express";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
+import cors from "cors";
 
 const app = express();
+
+// Allow CORS (replace with your WebSDK domain for stricter security)
+// app.use(cors({
+//   origin: "https://southwire-cabletechsupport-dev.onrender.com"
+// }));
+
+app.use(cors());
+
+
 app.use(express.json());
 
 // Read environment variables (Render injects these automatically)
@@ -11,7 +21,7 @@ const KORE_CLIENT_ID = process.env.CLIENT_ID;
 const KORE_CLIENT_SECRET = process.env.CLIENT_SECRET;
 const JWT_SECRET = process.env.JWT_SECRET || "super_secret_key";
 
-// Simple timing-safe comparison
+// Safe comparison
 function safeEqual(a, b) {
   const ab = Buffer.from(a || "", "utf8");
   const bb = Buffer.from(b || "", "utf8");
@@ -19,7 +29,7 @@ function safeEqual(a, b) {
   return crypto.timingSafeEqual(ab, bb);
 }
 
-// Kore WebSDK will call this endpoint
+// JWT endpoint
 app.post("/sts", (req, res) => {
   const { clientId, clientSecret, userIdentity } = req.body || {};
 
