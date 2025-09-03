@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 // --- Rate limiting: 600 logins/min per IP ---
 const limiter = rateLimit({
   windowMs: 60 * 1000,  // 1 minute
-  max: 600,             // 600 requests per IP
+  max: 1000,             // 600 requests per IP
   standardHeaders: true,
   legacyHeaders: false,
   keyGenerator: (req) => req.ip,
